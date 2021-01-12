@@ -13,3 +13,19 @@ angsd-io = { git = "https://github.com/malthesr/angsd-io.git" }
 ```
 
 For more information, including on how to depend on a particular commit, see [here](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-git-repositories).
+
+## Examples
+
+The `examples/` sub-directory contains runnable examples of illustrative basic usage of the crate. For better performance, compile these with the `--release` flag. For instance, to read a SAF file and print it to stdout,
+
+```
+cargo run --release --example read_saf [PATH_TO_SAF]
+```
+
+## Documentation
+
+The documentation can be built and viewed locally by running
+
+```
+cargo doc --open
+```
