@@ -1,5 +1,7 @@
 # angsd-io
 
+[![GitHub Actions status](https://github.com/malthesr/angsd-io/workflows/CI/badge.svg)](https://github.com/malthesr/angsd-io/actions)
+
 **angsd-io** is a Rust crate for for reading and writing common formats from the [ANGSD](https://github.com/ANGSD/angsd) suite of bioinformatics tools.
 
 ## Usage
