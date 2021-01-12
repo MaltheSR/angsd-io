@@ -40,7 +40,9 @@ impl Index {
 
 impl fmt::Display for Index {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let version = std::str::from_utf8(&MAGIC).unwrap().trim_matches(char::from(0));
+        let version = std::str::from_utf8(&MAGIC)
+            .unwrap()
+            .trim_matches(char::from(0));
         writeln!(f, "##fileformat={}", version)?;
 
         writeln!(f, "##alleles={}", self.n_alleles)?;

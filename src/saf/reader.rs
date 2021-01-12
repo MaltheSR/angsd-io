@@ -13,10 +13,7 @@ pub mod iter;
 mod position_reader;
 mod value_reader;
 
-pub use self::{
-    position_reader::PositionReader,
-    value_reader::ValueReader,
-};
+pub use self::{position_reader::PositionReader, value_reader::ValueReader};
 
 pub struct Reader<R> {
     index: index::Index,
@@ -107,10 +104,12 @@ impl Reader<io::BufReader<File>> {
     where
         P: Into<PathBuf>,
     {
-        let prefix = find_prefix(path).ok_or(io::Error::new(
-            io::ErrorKind::InvalidInput,
-            "input is not a SAF member path",
-        ))?;
+        let prefix = find_prefix(path).ok_or_else(|| {
+            io::Error::new(
+                io::ErrorKind::InvalidInput,
+                "input is not a SAF member path",
+            )
+        })?;
 
         Self::from_prefix(prefix)
     }
@@ -141,11 +140,11 @@ pub trait BinaryRead {
 
     fn read_exact(&mut self, buf: &mut [Self::Value]) -> io::Result<()>;
 
-    fn chunks<'a>(&'a mut self, chunk_size: usize) -> iter::BinaryChunks<'a, Self> {
+    fn chunks(&mut self, chunk_size: usize) -> iter::BinaryChunks<Self> {
         iter::BinaryChunks::new(self, chunk_size)
     }
 
-    fn iter<'a>(&'a mut self) -> iter::BinaryIterator<'a, Self> {
+    fn iter(&mut self) -> iter::BinaryIterator<Self> {
         iter::BinaryIterator::new(self)
     }
 }

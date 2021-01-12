@@ -1,6 +1,6 @@
 use std::{
     env,
-    io::{self, Write}
+    io::{self, Write},
 };
 
 use angsd_io::saf::reader::Reader;
@@ -15,9 +15,12 @@ fn main() -> io::Result<()> {
 
     writeln!(&mut writer, "{}", reader.index())?;
 
-    let header = format!  (
+    let header = format!(
         "chrom\tpos\t{}",
-        (0..reader.index().n_alleles()).map(|x| x.to_string()).collect::<Vec<String>>().join("\t")
+        (0..reader.index().n_alleles())
+            .map(|x| x.to_string())
+            .collect::<Vec<String>>()
+            .join("\t")
     );
     writeln!(&mut writer, "{}", header)?;
 
