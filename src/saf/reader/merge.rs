@@ -12,7 +12,7 @@ impl<R> MergedReader<R>
 where
     R: io::BufRead,
 {
-    pub fn iter<'a>(&'a mut self) -> MergedSites<iter::Sites<'a, R>> {
+    pub fn iter(&mut self) -> MergedSites<iter::Sites<R>> {
         MergedSites::from_safs(&mut self.readers)
     }
 
