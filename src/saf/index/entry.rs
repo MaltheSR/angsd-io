@@ -9,7 +9,11 @@ pub struct Entry {
 }
 
 impl Entry {
-    pub fn names(&self) -> Names {
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+
+    pub(crate) fn iter_names(&self) -> Names {
         Names::new(&self.name, self.n_sites)
     }
 
@@ -34,7 +38,7 @@ impl fmt::Display for Entry {
 }
 
 #[derive(Clone, Debug, Default)]
-pub struct Names<'a> {
+pub(crate) struct Names<'a> {
     name: &'a str,
     n_sites: usize,
     current: usize,

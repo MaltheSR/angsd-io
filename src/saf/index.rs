@@ -14,8 +14,24 @@ pub struct Index {
 }
 
 impl Index {
-    pub fn names(&self) -> Names {
+    pub fn iter_names(&self) -> Names {
         Names::new(self)
+    }
+
+    pub fn entries(&self) -> &[Entry] {
+        &self.entries
+    }
+
+    pub fn entries_mut(&mut self) -> &mut [Entry] {
+        &mut self.entries
+    }
+
+    pub fn into_entries(self) -> Vec<Entry> {
+        self.entries
+    }
+
+    pub fn names(&self) -> Vec<&str> {
+        self.entries.iter().map(|x| x.name()).collect()
     }
 
     pub fn n_alleles(&self) -> usize {
@@ -73,7 +89,7 @@ impl<'a> Names<'a> {
         Self {
             entries,
             current: 0,
-            iter: entries[0].names(),
+            iter: entries[0].iter_names(),
         }
     }
 }
@@ -90,7 +106,7 @@ impl<'a> Iterator for Names<'a> {
                 if self.current >= self.entries.len() {
                     None
                 } else {
-                    self.iter = self.entries[self.current].names();
+                    self.iter = self.entries[self.current].iter_names();
 
                     self.next()
                 }

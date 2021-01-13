@@ -79,7 +79,7 @@ where
 
     pub fn sites(&mut self) -> iter::Sites<R> {
         iter::Sites::new(
-            self.index.names(),
+            self.index.iter_names(),
             self.position_reader.iter(),
             self.value_reader.chunks(self.index.n_alleles()),
         )
