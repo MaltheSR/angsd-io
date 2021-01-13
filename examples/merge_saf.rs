@@ -23,7 +23,9 @@ fn main() -> io::Result<()> {
     writeln!(&mut writer, "{}", header)?;
 
     for multi_site in merge.iter().map(|x| x.unwrap()) {
-        assert!(multi_site.iter().all(|site| site.same_location(&multi_site[0])));
+        assert!(multi_site
+            .iter()
+            .all(|site| site.same_location(&multi_site[0])));
 
         write!(&mut writer, "{}", multi_site[0])?;
 
