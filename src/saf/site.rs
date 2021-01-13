@@ -1,5 +1,7 @@
 use std::{fmt, io};
 
+use crate::merge::Position;
+
 #[derive(Clone, Debug, Default)]
 pub struct Site<'a> {
     name: &'a str,
@@ -36,12 +38,30 @@ impl<'a> Site<'a> {
         }
     }
 
+    pub fn values(&self) -> &[f32] {
+        &self.values
+    }
+
     pub fn position(&self) -> u32 {
         self.position
     }
 
-    pub fn values(&self) -> &[f32] {
-        &self.values
+    pub fn same_location(&self, other: &Self) -> bool {
+        self.name() == other.name() && self.position() == other.position()
+    }
+}
+
+impl Position for Site<'_> {
+    fn name(&self) -> &str {
+        self.name
+    }
+
+    fn position(&self) -> u32 {
+        self.position
+    }
+
+    fn same_location(&self, other: &Self) -> bool {
+        self.same_location(other)
     }
 }
 
@@ -52,7 +72,7 @@ impl fmt::Display for Site<'_> {
             .iter()
             .map(|x| x.to_string())
             .collect::<Vec<String>>()
-            .join("\t");
+            .join(",");
 
         write!(f, "{}\t{}\t{}", self.name, self.position + 1, fmt_values)
     }

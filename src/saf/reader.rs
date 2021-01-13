@@ -10,10 +10,15 @@ use ndarray::prelude::*;
 use crate::saf::{consts::*, index};
 
 pub mod iter;
+mod merge;
 mod position_reader;
 mod value_reader;
 
-pub use self::{position_reader::PositionReader, value_reader::ValueReader};
+pub use self::{
+    merge::MergedReader,
+    position_reader::PositionReader,
+    value_reader::ValueReader
+};
 
 pub struct Reader<R> {
     index: index::Index,
