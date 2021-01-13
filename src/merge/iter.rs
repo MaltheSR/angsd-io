@@ -142,7 +142,7 @@ where
     pub fn argmax(&self, dict: &SequenceDict) -> Option<usize> {
         let mut argmax = 0;
 
-        for (i, position) in self.0.iter().skip(1).enumerate() {
+        for (i, position) in self.0.iter().enumerate().skip(1) {
             match dict.compare(position, &self.0[argmax]) {
                 Some(cmp::Ordering::Greater) => argmax = i,
                 Some(cmp::Ordering::Equal) => (),
