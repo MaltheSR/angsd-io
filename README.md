@@ -24,6 +24,12 @@ The [`examples`](examples/) sub-directory contains runnable examples of illustra
 cargo run --release --example read_saf [PATH_TO_SAF]
 ```
 
+To read the intersecting sites of multiple SAF files,
+
+```
+cargo run --release --example merge_saf [PATHS_TO_SAFS] 
+```
+
 ## Documentation
 
 The documentation can be built and viewed locally by running
