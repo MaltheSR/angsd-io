@@ -15,7 +15,7 @@ fn main() -> io::Result<()> {
 
     writeln!(&mut writer, "{}", reader.index())?;
 
-    let header = format!("chrom\tpos\t{}", src);
+    let header = format!("#chrom\tpos\t{}", src);
 
     writeln!(&mut writer, "{}", header)?;
 

@@ -18,7 +18,7 @@ fn main() -> io::Result<()> {
     let stdout = io::stdout();
     let mut writer = io::BufWriter::new(stdout.lock());
 
-    let header = format!("chrom\tpos\t{}", src.join("\t"));
+    let header = format!("#chrom\tpos\t{}", src.join("\t"));
 
     writeln!(&mut writer, "{}", header)?;
 
