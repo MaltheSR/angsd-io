@@ -2,7 +2,7 @@
 
 [![GitHub Actions status](https://github.com/malthesr/angsd-io/workflows/CI/badge.svg)](https://github.com/malthesr/angsd-io/actions)
 
-**angsd-io** is a Rust crate for for reading and writing common formats from the [ANGSD](https://github.com/ANGSD/angsd) suite of bioinformatics tools.
+**angsd-io** is a Rust crate for reading and writing common formats from the [ANGSD](https://github.com/ANGSD/angsd) suite of bioinformatics tools.
 
 ## Usage
 
@@ -15,6 +15,12 @@ angsd-io = { git = "https://github.com/malthesr/angsd-io.git" }
 ```
 
 For more information, including on how to depend on a particular commit, see [here](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#specifying-dependencies-from-git-repositories).
+
+By default, **angsd-io** depends on the [ndarray](https://github.com/rust-ndarray/ndarray) crate to conveniently read to and from array structures. If you do not need this, you may wish to disable this dependency:
+
+```
+angsd-io = { git = "https://github.com/malthesr/angsd-io.git", default-features = false }
+```
 
 ## Examples
 
