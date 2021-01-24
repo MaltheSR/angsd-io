@@ -53,6 +53,8 @@ mod tests {
     fn write_from_slice() -> io::Result<()> {
         let mut writer = ValueWriter::new(Vec::new());
 
+        writer.write_header()?;
+
         let values = vec![0.0, 0.32, 0.89];
 
         writer.write_all(&values)?;
@@ -60,6 +62,8 @@ mod tests {
         let src = writer.finish()?;
 
         let mut reader = ValueReader::new(&src[..]);
+
+        assert_eq!("safv3", reader.read_header()?);
 
         for value in values {
             assert_eq!(reader.read()?, value);

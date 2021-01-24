@@ -53,6 +53,8 @@ mod tests {
     fn write_from_slice() -> io::Result<()> {
         let mut writer = PositionWriter::new(Vec::new());
 
+        writer.write_header()?;
+
         let positions = vec![0, 32, 89];
 
         writer.write_all(&positions)?;
@@ -61,8 +63,10 @@ mod tests {
 
         let mut reader = PositionReader::new(&src[..]);
 
-        for pos in positions {
-            assert_eq!(reader.read()?, pos);
+        assert_eq!("safv3", reader.read_header()?);
+
+        for position in positions {
+            assert_eq!(reader.read()?, position);
         }
 
         Ok(())
