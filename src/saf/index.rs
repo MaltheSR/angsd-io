@@ -1,6 +1,6 @@
 use std::{fmt, io};
 
-use crate::saf::constants::MAGIC;
+use crate::saf::constants::SAF_V3_MAGIC;
 
 mod entry;
 mod reader;
@@ -65,7 +65,7 @@ impl Index {
 
 impl fmt::Display for Index {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let version = std::str::from_utf8(&MAGIC)
+        let version = std::str::from_utf8(&SAF_V3_MAGIC)
             .unwrap()
             .trim_matches(char::from(0));
         writeln!(f, "##fileformat={}", version)?;

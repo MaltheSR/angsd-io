@@ -4,7 +4,9 @@ use byteorder::{LittleEndian, ReadBytesExt};
 
 use flate2::bufread::MultiGzDecoder;
 
-use super::{parse_magic, read_magic, BinaryRead};
+use super::{read_saf_magic, BinaryRead};
+
+use crate::utils;
 
 pub struct ValueReader<R> {
     inner: MultiGzDecoder<R>,
@@ -21,9 +23,9 @@ where
     }
 
     pub fn read_header(&mut self) -> io::Result<String> {
-        let magic = read_magic(&mut self.inner)?;
+        let magic = read_saf_magic(&mut self.inner)?;
 
-        parse_magic(&magic)
+        utils::parse_magic(&magic)
     }
 }
 

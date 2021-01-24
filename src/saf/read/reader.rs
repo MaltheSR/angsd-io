@@ -7,11 +7,14 @@ use std::{
 #[cfg(feature = "ndarray")]
 use ndarray::prelude::*;
 
-use super::{iter, parse_magic, BinaryRead, PositionReader, ValueReader};
+use super::{iter, BinaryRead, PositionReader, ValueReader};
 
-use crate::saf::{
-    constants::{EXTENSIONS, INDEX_EXT, POSITION_EXT, VALUE_EXT},
-    index,
+use crate::{
+    saf::{
+        constants::{EXTENSIONS, INDEX_EXT, POSITION_EXT, VALUE_EXT},
+        index,
+    },
+    utils,
 };
 
 pub struct Reader<R> {
@@ -89,7 +92,7 @@ where
 
     pub fn read_header(&mut self) -> io::Result<String> {
         // Ok to unwrap here, magic is checked in index construction
-        let index_header = parse_magic(&self.index.magic())?;
+        let index_header = utils::parse_magic(&self.index.magic())?;
         let position_header = self.position_reader.read_header()?;
         let value_header = self.value_reader.read_header()?;
 

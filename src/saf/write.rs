@@ -1,6 +1,6 @@
 use std::io;
 
-use crate::saf::constants::MAGIC;
+use crate::saf::constants::SAF_V3_MAGIC;
 
 mod position_writer;
 mod value_writer;
@@ -33,5 +33,5 @@ pub(crate) fn write_magic<W>(writer: &mut W) -> io::Result<()>
 where
     W: io::Write,
 {
-    writer.write_all(&MAGIC)
+    writer.write_all(&SAF_V3_MAGIC)
 }
