@@ -60,13 +60,17 @@ where
     }
 
     pub fn read_headers(&mut self) -> io::Result<String> {
-        let mut headers = self.readers
+        let mut headers = self
+            .readers
             .iter_mut()
             .map(|x| x.read_header())
             .collect::<io::Result<Vec<_>>>()?;
 
         if !headers.iter().all(|x| x == &headers[0]) {
-            Err(io::Error::new(io::ErrorKind::InvalidInput, "SAF file readers have distinct headers"))
+            Err(io::Error::new(
+                io::ErrorKind::InvalidInput,
+                "SAF file readers have distinct headers",
+            ))
         } else {
             Ok(headers.pop().unwrap())
         }

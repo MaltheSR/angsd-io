@@ -51,7 +51,7 @@ impl Index {
         Self {
             magic,
             n_alleles,
-            entries
+            entries,
         }
     }
 

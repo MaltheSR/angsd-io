@@ -15,7 +15,7 @@ pub trait BinaryWrite {
     fn write_all<'a, I>(&mut self, values: I) -> io::Result<usize>
     where
         I: IntoIterator<Item = &'a Self::Value>,
-        Self::Value: 'a
+        Self::Value: 'a,
     {
         let mut counter = 0;
 

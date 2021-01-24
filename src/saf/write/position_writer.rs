@@ -4,18 +4,18 @@ use byteorder::{LittleEndian, WriteBytesExt};
 
 use noodles_bgzf as bgzf;
 
-use super::{BinaryWrite, write_magic};
+use super::{write_magic, BinaryWrite};
 
 pub struct PositionWriter<W>
 where
-    W: io::Write
+    W: io::Write,
 {
-    inner: bgzf::Writer<W>
+    inner: bgzf::Writer<W>,
 }
 
 impl<W> PositionWriter<W>
 where
-    W: io::Write
+    W: io::Write,
 {
     pub fn finish(self) -> io::Result<W> {
         self.inner.finish()
@@ -34,7 +34,7 @@ where
 
 impl<W> BinaryWrite for PositionWriter<W>
 where
-    W: io::Write
+    W: io::Write,
 {
     type Value = u32;
 

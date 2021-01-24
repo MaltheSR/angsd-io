@@ -95,7 +95,6 @@ where
         assert!(index_header == position_header && index_header == value_header);
 
         Ok(index_header)
-
     }
 }
 
@@ -204,7 +203,7 @@ pub(crate) fn parse_magic(magic: &[u8; 8]) -> io::Result<String> {
             let parsed = s.trim_matches(char::from(0));
 
             Ok(parsed.to_string())
-        },
+        }
         Err(_) => {
             let msg = format!("unparseable magic number {:x?}", magic);
 

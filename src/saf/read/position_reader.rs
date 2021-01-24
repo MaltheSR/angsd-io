@@ -4,7 +4,7 @@ use byteorder::{LittleEndian, ReadBytesExt};
 
 use flate2::bufread::MultiGzDecoder;
 
-use super::{BinaryRead, parse_magic, read_magic};
+use super::{parse_magic, read_magic, BinaryRead};
 
 pub struct PositionReader<R> {
     inner: MultiGzDecoder<R>,
