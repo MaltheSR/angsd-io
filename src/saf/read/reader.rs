@@ -91,7 +91,6 @@ where
     }
 
     pub fn read_header(&mut self) -> io::Result<String> {
-        // Ok to unwrap here, magic is checked in index construction
         let index_header = utils::parse_magic(&self.index.magic())?;
         let position_header = self.position_reader.read_header()?;
         let value_header = self.value_reader.read_header()?;
