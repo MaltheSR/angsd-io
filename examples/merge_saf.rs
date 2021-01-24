@@ -15,6 +15,9 @@ fn main() -> io::Result<()> {
 
     let mut merge = MergedReader::new(readers);
 
+    let header = merge.read_headers()?;
+    assert_eq!(header, String::from("safv3"));
+
     let stdout = io::stdout();
     let mut writer = io::BufWriter::new(stdout.lock());
 

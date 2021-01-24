@@ -39,7 +39,7 @@ where
     }
 
     pub fn read_index(mut self) -> io::Result<Index> {
-        let _magic = read::read_magic(&mut self.inner);
+        let magic = read::read_magic(&mut self.inner)?;
 
         let n_categories = self.inner.read_u64::<LittleEndian>()?;
         let n_categories = usize::try_from(n_categories).expect("cannot convert u64 to usize");
@@ -50,6 +50,6 @@ where
             entries.push(entry)
         }
 
-        Ok(Index::new(n_alleles, entries))
+        Ok(Index::new(magic, n_alleles, entries))
     }
 }

@@ -10,6 +10,9 @@ fn main() -> io::Result<()> {
 
     let mut reader = Reader::from_member_path(&src)?;
 
+    let header = reader.read_header()?;
+    assert_eq!(header, String::from("safv3"));
+
     let stdout = io::stdout();
     let mut writer = io::BufWriter::new(stdout.lock());
 

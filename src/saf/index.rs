@@ -9,6 +9,7 @@ pub use self::{entry::Entry, reader::Reader};
 
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct Index {
+    magic: [u8; 8],
     n_alleles: usize,
     entries: Vec<Entry>,
 }
@@ -30,6 +31,10 @@ impl Index {
         self.entries
     }
 
+    pub fn magic(&self) -> &[u8; 8] {
+        &self.magic
+    }
+
     pub fn names(&self) -> Vec<&str> {
         self.entries.iter().map(|x| x.name()).collect()
     }
@@ -42,8 +47,12 @@ impl Index {
         self.entries.iter().map(|x| x.n_sites()).sum()
     }
 
-    pub fn new(n_alleles: usize, entries: Vec<Entry>) -> Self {
-        Self { n_alleles, entries }
+    pub fn new(magic: [u8; 8], n_alleles: usize, entries: Vec<Entry>) -> Self {
+        Self {
+            magic,
+            n_alleles,
+            entries
+        }
     }
 
     pub fn from_reader<R>(reader: R) -> io::Result<Self>

@@ -85,6 +85,18 @@ where
             self.value_reader.chunks(self.index.n_alleles()),
         )
     }
+
+    pub fn read_header(&mut self) -> io::Result<String> {
+        // Ok to unwrap here, magic is checked in index construction
+        let index_header = parse_magic(&self.index.magic())?;
+        let position_header = self.position_reader.read_header()?;
+        let value_header = self.value_reader.read_header()?;
+
+        assert!(index_header == position_header && index_header == value_header);
+
+        Ok(index_header)
+
+    }
 }
 
 impl Reader<io::BufReader<File>> {
@@ -166,7 +178,7 @@ where
         .map(|x| string.trim_end_matches(*x).into())
 }
 
-pub(crate) fn read_magic<R>(reader: &mut R) -> io::Result<()>
+pub(crate) fn read_magic<R>(reader: &mut R) -> io::Result<([u8; 8])>
 where
     R: io::Read,
 {
@@ -175,7 +187,7 @@ where
     reader.read_exact(&mut magic)?;
 
     if magic == MAGIC {
-        Ok(())
+        Ok(magic)
     } else {
         let msg = format!(
             "invalid magic number (expected {:x?}, found {:x?})",
@@ -183,5 +195,20 @@ where
         );
 
         Err(io::Error::new(io::ErrorKind::InvalidData, msg))
+    }
+}
+
+pub(crate) fn parse_magic(magic: &[u8; 8]) -> io::Result<String> {
+    match std::str::from_utf8(&magic.to_vec()) {
+        Ok(s) => {
+            let parsed = s.trim_matches(char::from(0));
+
+            Ok(parsed.to_string())
+        },
+        Err(_) => {
+            let msg = format!("unparseable magic number {:x?}", magic);
+
+            Err(io::Error::new(io::ErrorKind::InvalidData, msg))
+        }
     }
 }

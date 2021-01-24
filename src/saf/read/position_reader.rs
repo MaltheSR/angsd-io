@@ -4,7 +4,7 @@ use byteorder::{LittleEndian, ReadBytesExt};
 
 use flate2::bufread::MultiGzDecoder;
 
-use super::{read_magic, BinaryRead};
+use super::{BinaryRead, parse_magic, read_magic};
 
 pub struct PositionReader<R> {
     inner: MultiGzDecoder<R>,
@@ -19,6 +19,12 @@ where
             inner: MultiGzDecoder::new(reader),
         }
     }
+
+    pub fn read_header(&mut self) -> io::Result<String> {
+        let magic = read_magic(&mut self.inner)?;
+
+        parse_magic(&magic)
+    }
 }
 
 impl PositionReader<io::BufReader<File>> {
@@ -26,11 +32,7 @@ impl PositionReader<io::BufReader<File>> {
     where
         P: AsRef<Path>,
     {
-        let mut reader = File::open(path).map(io::BufReader::new).map(Self::new)?;
-
-        read_magic(&mut reader.inner)?;
-
-        Ok(reader)
+        File::open(path).map(io::BufReader::new).map(Self::new)
     }
 }
 
