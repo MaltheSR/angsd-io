@@ -34,3 +34,10 @@ pub fn parse_magic(magic: &[u8; 8]) -> io::Result<String> {
         }
     }
 }
+
+pub fn write_magic<W>(writer: &mut W, magic: &[u8; 8]) -> io::Result<()>
+where
+    W: io::Write,
+{
+    writer.write_all(magic)
+}

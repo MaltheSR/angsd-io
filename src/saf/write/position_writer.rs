@@ -4,7 +4,7 @@ use byteorder::{LittleEndian, WriteBytesExt};
 
 use noodles_bgzf as bgzf;
 
-use super::{write_magic, BinaryWrite};
+use super::{write_saf_magic, BinaryWrite};
 
 pub struct PositionWriter<W>
 where
@@ -28,7 +28,7 @@ where
     }
 
     pub fn write_header(&mut self) -> io::Result<()> {
-        write_magic(&mut self.inner)
+        write_saf_magic(&mut self.inner)
     }
 }
 

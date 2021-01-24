@@ -1,6 +1,6 @@
 use std::io;
 
-use crate::saf::constants::SAF_V3_MAGIC;
+use crate::{saf::constants::SAF_V3_MAGIC, utils};
 
 mod position_writer;
 mod value_writer;
@@ -29,9 +29,9 @@ pub trait BinaryWrite {
     }
 }
 
-pub(crate) fn write_magic<W>(writer: &mut W) -> io::Result<()>
+pub(self) fn write_saf_magic<W>(writer: &mut W) -> io::Result<()>
 where
     W: io::Write,
 {
-    writer.write_all(&SAF_V3_MAGIC)
+    utils::write_magic(writer, &SAF_V3_MAGIC)
 }
