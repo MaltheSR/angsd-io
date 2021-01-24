@@ -3,7 +3,7 @@ use std::{
     io::{self, Write},
 };
 
-use angsd_io::saf::reader::{MergedReader, Reader};
+use angsd_io::saf::read::{MergedReader, Reader};
 
 fn main() -> io::Result<()> {
     let src: Vec<String> = env::args().skip(1).collect();

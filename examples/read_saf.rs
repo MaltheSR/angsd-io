@@ -3,7 +3,7 @@ use std::{
     io::{self, Write},
 };
 
-use angsd_io::saf::reader::Reader;
+use angsd_io::saf::read::Reader;
 
 fn main() -> io::Result<()> {
     let src = env::args().nth(1).expect("missing path to SAF member file");
