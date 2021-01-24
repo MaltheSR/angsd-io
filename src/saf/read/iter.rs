@@ -1,4 +1,6 @@
-use super::*;
+use std::io;
+
+use super::{BinaryRead, PositionReader, ValueReader};
 
 use crate::saf::{index, Site};
 

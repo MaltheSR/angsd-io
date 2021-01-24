@@ -4,7 +4,7 @@ use byteorder::{LittleEndian, ReadBytesExt};
 
 use flate2::bufread::MultiGzDecoder;
 
-use super::*;
+use super::{read_magic, BinaryRead};
 
 pub struct ValueReader<R> {
     inner: MultiGzDecoder<R>,

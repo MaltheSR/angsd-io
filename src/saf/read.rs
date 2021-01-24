@@ -7,7 +7,7 @@ use std::{
 #[cfg(feature = "ndarray")]
 use ndarray::prelude::*;
 
-use crate::saf::{consts::*, index};
+use crate::saf::{constants::*, index};
 
 pub mod iter;
 mod merge;

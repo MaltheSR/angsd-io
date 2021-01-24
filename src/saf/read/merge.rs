@@ -5,7 +5,7 @@ use ndarray::prelude::*;
 
 use crate::merge::MergedSites;
 
-use super::*;
+use super::{iter, Reader};
 
 pub struct MergedReader<R> {
     readers: Vec<Reader<R>>,

@@ -1,6 +1,6 @@
-pub(crate) mod consts;
+pub(crate) mod constants;
 pub mod index;
-pub mod reader;
+pub mod read;
 mod site;
 
 pub use site::Site;

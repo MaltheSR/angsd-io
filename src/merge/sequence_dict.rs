@@ -27,7 +27,7 @@ impl SequenceDict {
         self.0.contains(name)
     }
 
-    pub fn from_saf_readers<R>(readers: &[saf::reader::Reader<R>]) -> Self {
+    pub fn from_saf_readers<R>(readers: &[saf::read::Reader<R>]) -> Self {
         let indices = readers.iter().map(|x| x.index()).collect::<Vec<_>>();
 
         let mut set = IndexSet::<String>::default();

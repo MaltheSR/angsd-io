@@ -1,6 +1,6 @@
 use std::{fmt, io};
 
-use crate::saf::consts::MAGIC;
+use crate::saf::constants::MAGIC;
 
 mod entry;
 mod reader;

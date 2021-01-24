@@ -15,11 +15,11 @@ impl<I> MergedSites<I> {
     }
 }
 
-impl<'a, R> MergedSites<saf::reader::iter::Sites<'a, R>>
+impl<'a, R> MergedSites<saf::read::iter::Sites<'a, R>>
 where
     R: io::BufRead,
 {
-    pub(crate) fn from_safs(safs: &'a mut [saf::reader::Reader<R>]) -> Self {
+    pub(crate) fn from_safs(safs: &'a mut [saf::read::Reader<R>]) -> Self {
         let dict = SequenceDict::from_saf_readers(safs);
 
         let iters = MultiForward(safs.iter_mut().map(|x| Forward(x.sites())).collect());

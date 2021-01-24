@@ -2,9 +2,9 @@ use std::{convert::TryFrom, io};
 
 use byteorder::{LittleEndian, ReadBytesExt};
 
-use super::*;
+use crate::saf::read;
 
-use crate::saf::reader;
+use super::{Entry, Index};
 
 pub struct Reader<R> {
     inner: R,
@@ -39,7 +39,7 @@ where
     }
 
     pub fn read_index(mut self) -> io::Result<Index> {
-        let _magic = reader::read_magic(&mut self.inner);
+        let _magic = read::read_magic(&mut self.inner);
 
         let n_categories = self.inner.read_u64::<LittleEndian>()?;
         let n_categories = usize::try_from(n_categories).expect("cannot convert u64 to usize");
