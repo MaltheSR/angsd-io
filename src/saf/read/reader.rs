@@ -77,10 +77,13 @@ where
     }
 
     pub fn sites(&mut self) -> iter::Sites<R> {
+        let n_sites = self.index.n_sites();
+
         iter::Sites::new(
             self.index.iter_names(),
             self.position_reader.iter(),
             self.value_reader.chunks(self.index.n_alleles()),
+            n_sites,
         )
     }
 

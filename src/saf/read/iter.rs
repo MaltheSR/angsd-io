@@ -77,6 +77,7 @@ where
     names: index::Names<'a>,
     positions: BinaryIterator<'a, PositionReader<R>>,
     values: BinaryChunks<'a, ValueReader<R>>,
+    remaining: usize,
 }
 
 impl<'a, R> Sites<'a, R>
@@ -87,11 +88,13 @@ where
         names: index::Names<'a>,
         positions: BinaryIterator<'a, PositionReader<R>>,
         values: BinaryChunks<'a, ValueReader<R>>,
+        n_sites: usize,
     ) -> Self {
         Self {
             names,
             positions,
             values,
+            remaining: n_sites,
         }
     }
 }
@@ -105,11 +108,28 @@ where
     fn next(&mut self) -> Option<Self::Item> {
         match (self.names.next(), self.positions.next(), self.values.next()) {
             (None, None, None) => None,
-            (Some(n), Some(p), Some(v)) => Some(Site::from_io(n, p, v)),
+            (Some(n), Some(p), Some(v)) => {
+                self.remaining -= 1;
+
+                Some(Site::from_io(n, p, v))
+            }
             _ => Some(Err(io::Error::new(
                 io::ErrorKind::UnexpectedEof,
                 "incompatible SAF file lengths",
             ))),
         }
+    }
+
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        (self.remaining, Some(self.remaining))
+    }
+}
+
+impl<'a, R> ExactSizeIterator for Sites<'a, R>
+where
+    R: io::BufRead,
+{
+    fn len(&self) -> usize {
+        self.remaining
     }
 }
