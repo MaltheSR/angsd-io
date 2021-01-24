@@ -12,5 +12,6 @@ default = ["ndarray"]
 byteorder = "1.4.*"
 flate2 = "1.0.*"
 indexmap = { version = "1.6.*", default-features = false }
+noodles-bgzf = { git = "https://github.com/zaeleus/noodles.git" }
 
 ndarray = { version = "0.14.*", optional = true, default-features = false }
