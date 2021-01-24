@@ -1,7 +1,7 @@
 use std::io;
 
 #[cfg(feature = "ndarray")]
-use ndarray::prelude::*;
+use ndarray::{Array, Array2};
 
 use crate::merge::MergedSites;
 

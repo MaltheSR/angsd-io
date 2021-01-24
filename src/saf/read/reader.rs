@@ -5,7 +5,7 @@ use std::{
 };
 
 #[cfg(feature = "ndarray")]
-use ndarray::prelude::*;
+use ndarray::{Array, Array2};
 
 use super::{iter, BinaryRead, PositionReader, ValueReader};
 
