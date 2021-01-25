@@ -1,4 +1,4 @@
-use std::io;
+use std::{fs, io, path};
 
 use byteorder::{LittleEndian, WriteBytesExt};
 
@@ -11,6 +11,17 @@ where
     W: io::Write,
 {
     inner: bgzf::Writer<W>,
+}
+
+impl ValueWriter<io::BufWriter<fs::File>> {
+    pub fn from_path<P>(path: P) -> io::Result<Self>
+    where
+        P: AsRef<path::Path>,
+    {
+        fs::File::create(path)
+            .map(io::BufWriter::new)
+            .map(Self::new)
+    }
 }
 
 impl<W> ValueWriter<W>
