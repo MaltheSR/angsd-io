@@ -1,8 +1,4 @@
-use std::{
-    fs::File,
-    io,
-    path::Path,
-};
+use std::{fs::File, io, path::Path};
 
 #[cfg(feature = "ndarray")]
 use ndarray::{Array, Array2};
