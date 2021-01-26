@@ -28,6 +28,18 @@ impl<W> PositionWriter<W>
 where
     W: io::Write,
 {
+    pub fn inner(&self) -> &bgzf::Writer<W> {
+        &self.inner
+    }
+
+    pub fn inner_mut(&mut self) -> &mut bgzf::Writer<W> {
+        &mut self.inner
+    }
+
+    pub fn into_inner(self) -> bgzf::Writer<W> {
+        self.inner
+    }
+
     pub fn finish(self) -> io::Result<W> {
         self.inner.finish()
     }

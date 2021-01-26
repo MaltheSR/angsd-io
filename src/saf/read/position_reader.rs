@@ -16,6 +16,18 @@ impl<R> PositionReader<R>
 where
     R: io::BufRead,
 {
+    pub fn inner(&self) -> &MultiGzDecoder<R> {
+        &self.inner
+    }
+
+    pub fn inner_mut(&mut self) -> &mut MultiGzDecoder<R> {
+        &mut self.inner
+    }
+
+    pub fn into_inner(self) -> MultiGzDecoder<R> {
+        self.inner
+    }
+
     pub fn new(reader: R) -> Self {
         Self {
             inner: MultiGzDecoder::new(reader),
