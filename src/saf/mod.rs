@@ -1,4 +1,4 @@
-pub(crate) mod constants;
+pub mod constants;
 pub mod index;
 pub mod read;
 mod site;

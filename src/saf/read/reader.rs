@@ -11,7 +11,7 @@ use super::{iter, BinaryRead, PositionReader, ValueReader};
 
 use crate::{
     saf::{
-        constants::{EXTENSIONS, INDEX_EXT, POSITION_EXT, VALUE_EXT},
+        constants::{INDEX_EXTENSION, POSITION_EXTENSION, VALUE_EXTENSION},
         index,
     },
     utils,
@@ -135,11 +135,11 @@ impl Reader<io::BufReader<File>> {
     {
         let prefix = prefix.as_ref();
 
-        let index_path = prefix.with_extension(INDEX_EXT);
+        let index_path = prefix.with_extension(INDEX_EXTENSION);
 
-        let value_path = prefix.with_extension(VALUE_EXT);
+        let value_path = prefix.with_extension(VALUE_EXTENSION);
 
-        let position_path = prefix.with_extension(POSITION_EXT);
+        let position_path = prefix.with_extension(POSITION_EXTENSION);
 
         Self::from_paths(&index_path, &position_path, &value_path)
     }
@@ -155,7 +155,9 @@ where
         .expect("cannot convert path to string")
         .to_string();
 
-    EXTENSIONS
+    let extensions = vec![INDEX_EXTENSION, VALUE_EXTENSION, POSITION_EXTENSION];
+
+    extensions
         .iter()
         .find(|x| string.ends_with(*x))
         .map(|x| string.trim_end_matches(*x).into())
