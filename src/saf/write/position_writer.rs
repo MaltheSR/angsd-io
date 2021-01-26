@@ -14,7 +14,7 @@ where
 }
 
 impl PositionWriter<io::BufWriter<fs::File>> {
-    pub fn from_path<P>(path: P) -> io::Result<Self>
+    pub fn from_path<P>(path: &P) -> io::Result<Self>
     where
         P: AsRef<path::Path>,
     {

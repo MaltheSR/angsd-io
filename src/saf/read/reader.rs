@@ -1,7 +1,7 @@
 use std::{
     fs::File,
     io,
-    path::{Path, PathBuf},
+    path::Path,
 };
 
 #[cfg(feature = "ndarray")]
@@ -102,7 +102,7 @@ where
 }
 
 impl Reader<io::BufReader<File>> {
-    pub fn from_paths<P>(index_path: P, position_path: P, value_path: P) -> io::Result<Self>
+    pub fn from_paths<P>(index_path: &P, position_path: &P, value_path: &P) -> io::Result<Self>
     where
         P: AsRef<Path>,
     {
@@ -115,9 +115,9 @@ impl Reader<io::BufReader<File>> {
         Ok(Self::new(index, position_reader, value_reader))
     }
 
-    pub fn from_member_path<P>(path: P) -> io::Result<Self>
+    pub fn from_member_path<P>(path: &P) -> io::Result<Self>
     where
-        P: Into<PathBuf>,
+        P: AsRef<Path>,
     {
         let prefix = find_prefix(path).ok_or_else(|| {
             io::Error::new(
@@ -126,37 +126,34 @@ impl Reader<io::BufReader<File>> {
             )
         })?;
 
-        Self::from_prefix(prefix)
+        Self::from_prefix(&prefix)
     }
 
-    pub fn from_prefix<P>(prefix: P) -> io::Result<Self>
+    pub fn from_prefix<P>(prefix: &P) -> io::Result<Self>
     where
-        P: Into<PathBuf>,
+        P: AsRef<Path>,
     {
-        let prefix = prefix.into();
+        let prefix = prefix.as_ref();
 
-        let mut index_path = prefix.clone();
-        index_path.set_extension(INDEX_EXT);
+        let index_path = prefix.with_extension(INDEX_EXT);
 
-        let mut value_path = prefix.clone();
-        value_path.set_extension(VALUE_EXT);
+        let value_path = prefix.with_extension(VALUE_EXT);
 
-        let mut position_path = prefix;
-        position_path.set_extension(POSITION_EXT);
+        let position_path = prefix.with_extension(POSITION_EXT);
 
-        Self::from_paths(index_path, position_path, value_path)
+        Self::from_paths(&index_path, &position_path, &value_path)
     }
 }
 
 fn find_prefix<P>(path: P) -> Option<String>
 where
-    P: Into<PathBuf>,
+    P: AsRef<Path>,
 {
     let string = path
-        .into()
-        .into_os_string()
-        .into_string()
-        .expect("cannot convert path to string");
+        .as_ref()
+        .to_str()
+        .expect("cannot convert path to string")
+        .to_string();
 
     EXTENSIONS
         .iter()
