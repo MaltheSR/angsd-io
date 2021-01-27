@@ -7,6 +7,7 @@ use super::{iter, BinaryRead, PositionReader, ValueReader};
 
 use crate::{
     saf::{
+        self,
         constants::{INDEX_EXTENSION, POSITION_EXTENSION, VALUE_EXTENSION},
         index,
     },
@@ -115,7 +116,7 @@ impl Reader<io::BufReader<File>> {
     where
         P: AsRef<Path>,
     {
-        let prefix = find_prefix(path).ok_or_else(|| {
+        let prefix = saf::utils::prefix(path).ok_or_else(|| {
             io::Error::new(
                 io::ErrorKind::InvalidInput,
                 "input is not a SAF member path",
@@ -139,22 +140,4 @@ impl Reader<io::BufReader<File>> {
 
         Self::from_paths(&index_path, &position_path, &value_path)
     }
-}
-
-fn find_prefix<P>(path: P) -> Option<String>
-where
-    P: AsRef<Path>,
-{
-    let string = path
-        .as_ref()
-        .to_str()
-        .expect("cannot convert path to string")
-        .to_string();
-
-    let extensions = vec![INDEX_EXTENSION, VALUE_EXTENSION, POSITION_EXTENSION];
-
-    extensions
-        .iter()
-        .find(|x| string.ends_with(*x))
-        .map(|x| string.trim_end_matches(*x).into())
 }
