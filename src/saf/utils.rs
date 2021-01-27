@@ -46,5 +46,5 @@ where
     extensions
         .iter()
         .find(|x| string.ends_with(*x))
-        .map(|x| string.trim_end_matches(*x).trim_end_matches(".").into())
+        .map(|x| string.trim_end_matches(*x).trim_end_matches('.').into())
 }
