@@ -4,6 +4,37 @@ use super::{BinaryRead, PositionReader, ValueReader};
 
 use crate::saf::{index, Site};
 
+pub struct BinaryIter<R>
+where
+    R: BinaryRead,
+{
+    inner: R,
+}
+
+impl<R> BinaryIter<R>
+where
+    R: BinaryRead,
+{
+    pub fn new(inner: R) -> Self {
+        Self { inner }
+    }
+}
+
+impl<R> Iterator for BinaryIter<R>
+where
+    R: BinaryRead,
+{
+    type Item = io::Result<R::Value>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        match self.inner.read() {
+            Ok(v) => Some(Ok(v)),
+            Err(ref e) if e.kind() == io::ErrorKind::UnexpectedEof => None,
+            Err(e) => Some(Err(e)),
+        }
+    }
+}
+
 pub struct BinaryIterMut<'a, R>
 where
     R: BinaryRead + ?Sized,
@@ -29,6 +60,41 @@ where
     fn next(&mut self) -> Option<Self::Item> {
         match self.inner.read() {
             Ok(v) => Some(Ok(v)),
+            Err(ref e) if e.kind() == io::ErrorKind::UnexpectedEof => None,
+            Err(e) => Some(Err(e)),
+        }
+    }
+}
+
+pub struct BinaryChunks<R>
+where
+    R: BinaryRead,
+{
+    inner: R,
+    chunk_size: usize,
+}
+
+impl<R> BinaryChunks<R>
+where
+    R: BinaryRead,
+{
+    pub fn new(inner: R, chunk_size: usize) -> Self {
+        Self { inner, chunk_size }
+    }
+}
+
+impl<R> Iterator for BinaryChunks<R>
+where
+    R: BinaryRead,
+{
+    type Item = io::Result<Vec<R::Value>>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let mut values = Vec::new();
+        values.resize(self.chunk_size, R::Value::default());
+
+        match self.inner.read_exact(values.as_mut_slice()) {
+            Ok(()) => Some(Ok(values)),
             Err(ref e) if e.kind() == io::ErrorKind::UnexpectedEof => None,
             Err(e) => Some(Err(e)),
         }

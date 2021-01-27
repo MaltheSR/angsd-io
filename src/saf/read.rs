@@ -24,6 +24,20 @@ pub trait BinaryRead {
         iter::BinaryChunksMut::new(self, chunk_size)
     }
 
+    fn into_chunks(self, chunk_size: usize) -> iter::BinaryChunks<Self>
+    where
+        Self: Sized,
+    {
+        iter::BinaryChunks::new(self, chunk_size)
+    }
+
+    fn into_iter(self) -> iter::BinaryIter<Self>
+    where
+        Self: Sized,
+    {
+        iter::BinaryIter::new(self)
+    }
+
     fn iter_mut(&mut self) -> iter::BinaryIterMut<Self> {
         iter::BinaryIterMut::new(self)
     }
