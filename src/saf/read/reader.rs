@@ -29,6 +29,10 @@ impl<R> Reader<R> {
         &mut self.index
     }
 
+    pub fn into_contents(self) -> (index::Index, PositionReader<R>, ValueReader<R>) {
+        (self.index, self.position_reader, self.value_reader)
+    }
+
     pub fn new(
         index: index::Index,
         position_reader: PositionReader<R>,
