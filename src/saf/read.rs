@@ -20,12 +20,12 @@ pub trait BinaryRead {
 
     fn read_exact(&mut self, buf: &mut [Self::Value]) -> io::Result<()>;
 
-    fn chunks(&mut self, chunk_size: usize) -> iter::BinaryChunks<Self> {
-        iter::BinaryChunks::new(self, chunk_size)
+    fn chunks_mut(&mut self, chunk_size: usize) -> iter::BinaryChunksMut<Self> {
+        iter::BinaryChunksMut::new(self, chunk_size)
     }
 
-    fn iter(&mut self) -> iter::BinaryIterator<Self> {
-        iter::BinaryIterator::new(self)
+    fn iter_mut(&mut self) -> iter::BinaryIterMut<Self> {
+        iter::BinaryIterMut::new(self)
     }
 }
 

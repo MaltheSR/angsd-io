@@ -4,14 +4,14 @@ use super::{BinaryRead, PositionReader, ValueReader};
 
 use crate::saf::{index, Site};
 
-pub struct BinaryIterator<'a, R>
+pub struct BinaryIterMut<'a, R>
 where
     R: BinaryRead + ?Sized,
 {
     inner: &'a mut R,
 }
 
-impl<'a, R> BinaryIterator<'a, R>
+impl<'a, R> BinaryIterMut<'a, R>
 where
     R: BinaryRead + ?Sized,
 {
@@ -20,7 +20,7 @@ where
     }
 }
 
-impl<'a, R> Iterator for BinaryIterator<'a, R>
+impl<'a, R> Iterator for BinaryIterMut<'a, R>
 where
     R: BinaryRead + ?Sized,
 {
@@ -35,7 +35,7 @@ where
     }
 }
 
-pub struct BinaryChunks<'a, R>
+pub struct BinaryChunksMut<'a, R>
 where
     R: BinaryRead + ?Sized,
 {
@@ -43,7 +43,7 @@ where
     chunk_size: usize,
 }
 
-impl<'a, R> BinaryChunks<'a, R>
+impl<'a, R> BinaryChunksMut<'a, R>
 where
     R: BinaryRead + ?Sized,
 {
@@ -52,7 +52,7 @@ where
     }
 }
 
-impl<'a, R> Iterator for BinaryChunks<'a, R>
+impl<'a, R> Iterator for BinaryChunksMut<'a, R>
 where
     R: BinaryRead + ?Sized,
 {
@@ -75,8 +75,8 @@ where
     R: io::BufRead,
 {
     names: index::Names<'a>,
-    positions: BinaryIterator<'a, PositionReader<R>>,
-    values: BinaryChunks<'a, ValueReader<R>>,
+    positions: BinaryIterMut<'a, PositionReader<R>>,
+    values: BinaryChunksMut<'a, ValueReader<R>>,
     remaining: usize,
 }
 
@@ -86,8 +86,8 @@ where
 {
     pub fn new(
         names: index::Names<'a>,
-        positions: BinaryIterator<'a, PositionReader<R>>,
-        values: BinaryChunks<'a, ValueReader<R>>,
+        positions: BinaryIterMut<'a, PositionReader<R>>,
+        values: BinaryChunksMut<'a, ValueReader<R>>,
         n_sites: usize,
     ) -> Self {
         Self {

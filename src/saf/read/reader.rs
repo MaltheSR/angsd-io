@@ -81,8 +81,8 @@ where
 
         iter::Sites::new(
             self.index.iter_names(),
-            self.position_reader.iter(),
-            self.value_reader.chunks(self.index.n_alleles()),
+            self.position_reader.iter_mut(),
+            self.value_reader.chunks_mut(self.index.n_alleles()),
             n_sites,
         )
     }
