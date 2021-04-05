@@ -14,4 +14,4 @@ flate2 = "1.0.*"
 indexmap = { version = "1.6.*", default-features = false }
 noodles-bgzf = { git = "https://github.com/zaeleus/noodles.git", rev = "badc49ad" }
 
-ndarray = { version = "0.14.*", optional = true, default-features = false }
+ndarray = { version = "0.15", optional = true, default-features = false }
