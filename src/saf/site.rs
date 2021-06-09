@@ -42,6 +42,10 @@ impl<'a> Site<'a> {
         &self.values
     }
 
+    pub fn values_mut(&mut self) -> &mut [f32] {
+        &mut self.values
+    }
+
     pub fn position(&self) -> u32 {
         self.position
     }
