@@ -75,4 +75,12 @@ where
             Ok(headers.pop().unwrap())
         }
     }
+
+    pub fn readers(&self) -> &[Reader<R>] {
+        &self.readers
+    }
+
+    pub fn readers_mut(&mut self) -> &mut [Reader<R>] {
+        &mut self.readers
+    }
 }
