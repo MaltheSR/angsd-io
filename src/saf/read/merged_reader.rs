@@ -23,6 +23,10 @@ where
         Self { readers }
     }
 
+    pub fn n_alleles(&self) -> Vec<usize> {
+        self.readers.iter().map(|x| x.n_alleles()).collect()
+    }
+
     #[cfg(feature = "ndarray")]
     pub fn read_values_to_arrays(mut self) -> io::Result<Vec<Array2<f32>>> {
         let dims: Vec<(usize, usize)> = self

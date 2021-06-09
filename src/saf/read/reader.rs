@@ -21,6 +21,10 @@ pub struct Reader<R> {
 }
 
 impl<R> Reader<R> {
+    pub fn n_alleles(&self) -> usize {
+        self.index.n_alleles()
+    }
+
     pub fn index(&self) -> &index::Index {
         &self.index
     }
