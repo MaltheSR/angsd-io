@@ -14,6 +14,7 @@ use crate::{
     utils,
 };
 
+#[derive(Debug)]
 pub struct Reader<R> {
     index: index::Index,
     position_reader: PositionReader<R>,

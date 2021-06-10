@@ -7,6 +7,7 @@ use crate::merge::MergedSites;
 
 use super::{iter, Reader};
 
+#[derive(Debug)]
 pub struct MergedReader<R> {
     readers: Vec<Reader<R>>,
 }

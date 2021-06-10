@@ -8,6 +8,7 @@ use super::{read_saf_magic, BinaryRead};
 
 use crate::utils;
 
+#[derive(Debug)]
 pub struct PositionReader<R> {
     inner: MultiGzDecoder<R>,
 }
